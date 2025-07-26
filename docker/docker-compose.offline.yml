@@ -1,0 +1,52 @@
+services:
+  hydra-node:
+    container_name: hydra-node-${NETWORK}
+    image: ghcr.io/cardano-scaling/hydra-node:0.22.2
+    restart: unless-stopped
+    command:
+      [
+        "--node-id",
+        "${NODE_ID}",
+        "--listen",
+        "${HOST_IP}:${HOST_PORT}",
+        "--api-host",
+        "${API_HOST}",
+        "--api-port",
+        "${API_PORT}",
+        "--hydra-signing-key",
+        "/offline/config/${NODE_ID}.hydra.sk",
+        "--persistence-dir",
+        "/offline/config/persistence",
+        "--ledger-protocol-parameters",
+        "/offline/config/protocol-parameters.json",
+        "--offline-head-seed",
+        "0001",
+        "--initial-utxo",
+        "/offline/config/utxo.json",
+      ]
+    ports:
+      - "${HOST_PORT}:${HOST_PORT}"
+      - "${API_PORT}:${API_PORT}"
+    volumes:
+      - "${SCRIPTS_DIR_OFFLINE}:/offline"
+    networks:
+      vending-machine:
+
+  hydra-trp:
+    container_name: hydra-trp
+    image: ghcr.io/tx3-lang/tx3-hydra:5d97c78ed52f55d6c248899ee41a9575269decbf
+    restart: always
+    depends_on:
+      - hydra-node
+    ports:
+      - "8165:8165"
+    environment:
+      - RUST_LOG=debug
+    volumes:
+      - "${SCRIPTS_DIR_OFFLINE}/trp:/etc/tx3hydra"
+    networks:
+      vending-machine:
+
+networks:
+  vending-machine:
+    driver: bridge
