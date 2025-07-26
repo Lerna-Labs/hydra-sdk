@@ -1,0 +1,39 @@
+{
+  "name": "hydra-sdk",
+  "version": "1.0.0",
+  "description": "A collection of helpful code and examples for building applications leveraging Hydra technology",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "ts-node src/test.ts",
+    "start:api": "ts-node-dev examples/express-api/index.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lerna-labs/hydra-sdk.git"
+  },
+  "author": "Adam Dean <adam@crypto2099.io>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lerna-labs/hydra-sdk/issues"
+  },
+  "homepage": "https://github.com/lerna-labs/hydra-sdk#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@meshsdk/core": "^1.9.0-beta.64",
+    "@meshsdk/core-csl": "^1.9.0-beta.65",
+    "@meshsdk/hydra": "^1.9.0-beta.65",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "tx3-sdk": "^0.5.0",
+    "ws": "^8.18.3"
+  }
+}
