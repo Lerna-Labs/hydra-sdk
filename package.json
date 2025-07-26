@@ -1,0 +1,24 @@
+{
+  "name": "hydra-sdk",
+  "version": "1.0.0",
+  "description": "An SDK for interacting with Hydra Heads",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "hydra:up": "docker compose -f docker/docker-compose.offline.yml up --build -d",
+    "hydra:down": "docker compose -f docker/docker-compose.offline.yml down",
+    "hydra:logs": "docker compose -f docker/docker-compose.offline.yml logs -f"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lerna-labs/hydra-sdk.git"
+  },
+  "author": "Adam Dean <adam@crypto2099.io>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/lerna-labs/hydra-sdk/issues"
+  },
+  "homepage": "https://github.com/lerna-labs/hydra-sdk#readme"
+}
