@@ -1,12 +1,14 @@
 {
   "name": "hydra-sdk",
   "version": "1.0.0",
-  "description": "An SDK for interacting with Hydra Heads",
+  "description": "A collection of helpful code and examples for building applications leveraging Hydra technology",
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "scripts": {
+    "test": "ts-node src/test.ts",
+    "start:api": "ts-node-dev examples/express-api/index.ts"
     "hydra:up": "docker compose -f docker/docker-compose.offline.yml up --build -d",
     "hydra:down": "docker compose -f docker/docker-compose.offline.yml down",
     "hydra:logs": "docker compose -f docker/docker-compose.offline.yml logs -f"
@@ -20,5 +22,21 @@
   "bugs": {
     "url": "https://github.com/lerna-labs/hydra-sdk/issues"
   },
-  "homepage": "https://github.com/lerna-labs/hydra-sdk#readme"
+  "homepage": "https://github.com/lerna-labs/hydra-sdk#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "@meshsdk/core": "^1.9.0-beta.64",
+    "@meshsdk/core-csl": "^1.9.0-beta.65",
+    "@meshsdk/hydra": "^1.9.0-beta.65",
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "tx3-sdk": "^0.5.0",
+    "ws": "^8.18.3"
+  }
 }
