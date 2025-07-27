@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import express from 'express';
 import { queryUtxoByAddress, createMultisigAddress, getAdmin } from '../../src';
-import { MeshWallet } from '@meshsdk/core';
+import { MeshWallet, TxParser } from '@meshsdk/core';
 import { Client } from './protocol';
 import { ArgValue } from 'tx3-sdk/trp';
 
