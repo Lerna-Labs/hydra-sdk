@@ -20,7 +20,7 @@ hydra-down:
 hydra-reset:
 	$(MAKE) hydra-down && \
 	sudo rm -rf scripts/${NETWORK}/config/persistence && \
-	$(MAKE) hydra-restart
+	$(MAKE) hydra-up
 
 hydra-logs:
 	docker compose logs -f --tail=100
