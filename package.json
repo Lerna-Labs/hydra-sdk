@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "ts-node src/test.ts",
-    "start:api": "ts-node-dev examples/express-api/index.ts"
+    "start:api": "ts-node-dev examples/express-api/index.ts",
     "hydra:up": "docker compose -f docker/docker-compose.offline.yml up --build -d",
     "hydra:down": "docker compose -f docker/docker-compose.offline.yml down",
     "hydra:logs": "docker compose -f docker/docker-compose.offline.yml logs -f"
