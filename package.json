@@ -30,9 +30,9 @@
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "@meshsdk/core": "^1.9.0-beta.64",
-    "@meshsdk/core-csl": "^1.9.0-beta.65",
-    "@meshsdk/hydra": "^1.9.0-beta.65",
+    "@meshsdk/core": "1.9.0-beta.64",
+    "@meshsdk/core-csl": "1.9.0-beta.64",
+    "@meshsdk/hydra": "1.9.0-beta.64",
     "axios": "^1.11.0",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
