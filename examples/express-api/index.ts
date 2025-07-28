@@ -32,8 +32,76 @@ async function initialize(user_address: string): Promise<initializePayload> {
   return { admin_wallet, address, client };
 }
 
+// Recursive function to sanitize BigInts... need to swap them to strings when passing JSON
+function sanitizeBigInts(obj: any): any {
+  if (typeof obj === 'bigint') {
+    return obj.toString();
+  } else if (Array.isArray(obj)) {
+    return obj.map(sanitizeBigInts);
+  } else if (obj && typeof obj === 'object') {
+    const newObj: any = {};
+    for (const key of Object.keys(obj)) {
+      newObj[key] = sanitizeBigInts(obj[key]);
+    }
+    return newObj;
+  } else {
+    return obj;
+  }
+}
+
 app.get('/', (_, res) => {
   res.send('Hydra SDK API is running');
+});
+
+app.get('/balance/:address', async (req, res) => {
+  const user_address = req.params.address;
+  const { admin_wallet, address } = await initialize(user_address);
+
+  if (!admin_wallet) {
+    res.json({
+      status: 'ERROR',
+      message: 'Could not initialize admin wallet',
+    });
+    return;
+  }
+
+  if (!address) {
+    res.json({
+      status: 'ERROR',
+      message: 'Could not initialize user address',
+    });
+    return;
+  }
+
+  try {
+    const utxos = await queryUtxoByAddress(address);
+    const balance: Record<string, bigint> = {};
+    utxos.forEach((utxo) => {
+      utxo.amount.forEach((value) => {
+        const policy_id = value.unit;
+        for (const [asset_id, quantity] of Object.entries(value.quantity)) {
+          const unit = `${policy_id}.${asset_id}`;
+          if (balance[unit] === undefined) {
+            balance[unit] = 0n;
+          }
+
+          balance[unit] += BigInt(quantity);
+        }
+      });
+    });
+    res.json({
+      status: 'SUCCESS',
+      data: {
+        balance: sanitizeBigInts(balance),
+      },
+    });
+  } catch (error: any) {
+    console.error(error);
+    res.json({
+      status: 'ERROR',
+      message: 'Could not query utxo by address',
+    });
+  }
 });
 
 
@@ -112,20 +180,19 @@ app.post('/send', async (req, res) => {
     sender: ArgValue.from(address),
     receiver: ArgValue.from(receiver_address),
     userSignature: ArgValue.from(Buffer.from(signature, 'hex')),
-  }
+  };
 
-  console.log(args);
-
+  // console.log(args);
 
   const response = await client.sendCoinsTx(args);
 
-  console.log(`Send Coins Tx Response`, response);
+  // console.log(`Send Coins Tx Response`, response);
 
   const signedTx = await admin_wallet.signTx(response.tx);
   const submit_response = await submitTx(signedTx, reason);
   const response_json = await submit_response.json();
 
-  console.log(`Send Coins Tx Submit Response`, response_json);
+  // console.log(`Send Coins Tx Submit Response`, response_json);
   res.json({
     status: 'SUCCESS',
     data: {
