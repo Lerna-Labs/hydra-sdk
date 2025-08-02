@@ -2,4 +2,5 @@ node_modules
 .idea
 *.js
 .env
-scripts/*/config/persistence/
+scripts/*/hydra
+scripts/*/keys
