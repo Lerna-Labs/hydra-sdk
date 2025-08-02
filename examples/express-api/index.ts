@@ -104,7 +104,6 @@ app.get('/balance/:address', async (req, res) => {
   }
 });
 
-
 app.get('/utxos/:address', async (req, res) => {
   const user_address = req.params.address;
   const { admin_wallet, address } = await initialize(user_address);
@@ -180,19 +179,20 @@ app.post('/send', async (req, res) => {
     sender: ArgValue.from(address),
     receiver: ArgValue.from(receiver_address),
     userSignature: ArgValue.from(Buffer.from(signature, 'hex')),
-  };
+  }
 
-  // console.log(args);
+  console.log(args);
+
 
   const response = await client.sendCoinsTx(args);
 
-  // console.log(`Send Coins Tx Response`, response);
+  console.log(`Send Coins Tx Response`, response);
 
   const signedTx = await admin_wallet.signTx(response.tx);
   const submit_response = await submitTx(signedTx, reason);
   const response_json = await submit_response.json();
 
-  // console.log(`Send Coins Tx Submit Response`, response_json);
+  console.log(`Send Coins Tx Submit Response`, response_json);
   res.json({
     status: 'SUCCESS',
     data: {
