@@ -4,3 +4,4 @@ node_modules
 .env
 scripts/*/hydra
 scripts/*/keys
+config.toml
