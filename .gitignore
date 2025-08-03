@@ -1,7 +1,0 @@
-node_modules
-.idea
-*.js
-.env
-scripts/*/hydra
-scripts/*/keys
-config.toml
